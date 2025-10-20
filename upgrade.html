@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ترقية إلى النسخة المدفوعة - منشئ السيرة الذاتية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --warning: #ff9e00;
+            --danger: #ef476f;
+            --premium: #ff6b6b;
+            --premium-gold: #ffd700;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-premium: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ff9900 100%);
+            
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+            --shadow-xl: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        .upgrade-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .upgrade-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--premium-gold);
+        }
+        
+        .upgrade-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient-gold);
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--gradient-gold);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .upgrade-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .upgrade-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .upgrade-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .upgrade-message {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-right: 4px solid var(--primary);
+        }
+        
+        .upgrade-message p {
+            margin-bottom: 10px;
+        }
+        
+        .upgrade-message strong {
+            color: var(--primary);
+        }
+        
+        .ads-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px dashed var(--light-gray);
+        }
+        
+        .ads-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .ads-counter {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .ad-placeholder {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--light-gray);
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ad-placeholder:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .ad-placeholder.watched {
+            background: rgba(76, 201, 240, 0.1);
+            border-color: var(--success);
+        }
+        
+        .ad-placeholder.watched::after {
+            content: '✓ تمت المشاهدة';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .ad-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .ad-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .ad-text {
+            text-align: right;
+            flex: 1;
+        }
+        
+        .ad-text h3 {
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .ad-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .watch-ad-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .watch-ad-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .watch-ad-btn:disabled {
+            background: var(--light-gray);
+            color: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .upgrade-features {
+            text-align: right;
+            margin: 30px 0;
+        }
+        
+        .upgrade-features h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .features-list {
+            list-style: none;
+        }
+        
+        .features-list li {
+            margin: 15px 0;
+            color: var(--dark);
+            font-size: 1.1rem;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: rgba(76, 201, 240, 0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .upgrade-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-premium {
+            background: var(--gradient-gold);
+            color: white;
+            flex: 2;
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d5db;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #3ab8d9;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: var(--light-gray);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-gold);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 10000;
+            font-weight: bold;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        @keyframes slideDown {
+            from { top: -50px; opacity: 0; }
+            to { top: 20px; opacity: 1; }
+        }
+        
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .upgrade-card {
+                padding: 25px;
+            }
+            
+            .upgrade-title {
+                font-size: 2rem;
+            }
+            
+            .upgrade-actions {
+                flex-direction: column;
+            }
+            
+            .ad-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="upgrade-container">
+        <div class="upgrade-card">
+            <div class="premium-badge">
+                <i class="fas fa-crown"></i> ترقية إلى المميزة
+            </div>
+            
+            <div class="upgrade-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            
+            <h1 class="upgrade-title">ترقية إلى النسخة المدفوعة</h1>
+            <p class="upgrade-subtitle">احصل على ميزات حصرية لسيرة ذاتية لا تُضاهى</p>
+            
+            <div class="upgrade-message">
+                <p><strong>شكراً لاهتمامك بالترقية!</strong></p>
+                <p>لتفعيل النسخة المدفوعة، يرجى دعمنا من خلال مشاهدة 3 إعلانات قصيرة.</p>
+                <p>هذا يساعدنا على الاستمرار في تقديم خدمة مجانية للآخرين.</p>
+            </div>
+            
+            <!-- شريط التقدم -->
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span>تقدم الدعم</span>
+                    <span id="progressText">0/3 إعلانات</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <!-- حاوية الإعلانات -->
+            <div class="ads-container">
+                <div class="ads-header">
+                    <i class="fas fa-ad"></i>
+                    <h3>إعلانات الدعم</h3>
+                    <div class="ads-counter" id="adsCounter">0/3</div>
+                </div>
+                
+                <div class="ad-placeholder" id="ad1">
+                    <div class="ad-content">
+                        <div class="ad-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="ad-text">
+                            <h3>إعلان الدعم الأول</h3>
+                            <p>انقر لمشاهدة الإعلان ودعم الموقع</p>
+                        </div>
+                    </div>
+                    <button class="watch-ad-btn" data-ad="1">
+                        <i class="fas fa-play"></i> مشاهدة الإعلان
+                    </button>
+                </div>
+                
+                <div class="ad-placeholder" id="ad2">
+                    <div class="ad-content">
+                        <div class="ad-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="ad-text">
+                            <h3>إعلان الدعم الثاني</h3>
+                            <p>انقر لمشاهدة الإعلان ودعم الموقع</p>
+                        </div>
+                    </div>
+                    <button class="watch-ad-btn" data-ad="2">
+                        <i class="fas fa-play"></i> مشاهدة الإعلان
+                    </button>
+                </div>
+                
+                <div class="ad-placeholder" id="ad3">
+                    <div class="ad-content">
+                        <div class="ad-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="ad-text">
+                            <h3>إعلان الدعم الثالث</h3>
+                            <p>انقر لمشاهدة الإعلان ودعم الموقع</p>
+                        </div>
+                    </div>
+                    <button class="watch-ad-btn" data-ad="3">
+                        <i class="fas fa-play"></i> مشاهدة الإعلان
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ميزات الترقية -->
+            <div class="upgrade-features">
+                <h3><i class="fas fa-crown"></i> الميزات الحصرية التي ستحصل عليها:</h3>
+                <ul class="features-list">
+                    <li>قوالب احترافية حصرية</li>
+                    <li>إضافة صور شخصية عالية الجودة</li>
+                    <li>تصدير متعدد الصيغ (PDF, HTML, Word)</li>
+                    <li>إزالة العلامات المائية</li>
+                    <li>تخصيص متقدم للألوان والخطوط</li>
+                    <li>دعم فني متميز</li>
+                </ul>
+            </div>
+            
+            <!-- أزرار الترقية -->
+            <div class="upgrade-actions">
+                <button class="btn btn-secondary" onclick="goBack()">
+                    <i class="fas fa-arrow-right"></i> العودة
+                </button>
+                <button class="btn btn-premium" id="upgradeBtn" disabled onclick="completeUpgrade()">
+                    <i class="fas fa-lock"></i> انتظر إكمال الإعلانات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد الإعلان -->
+    <div id="adConfirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="background: white; border-radius: 15px; padding: 30px; max-width: 500px; width: 90%; text-align: center; position: relative;">
+            <button id="closeAdConfirm" style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray);">×</button>
+            
+            <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 2rem;">
+                <i class="fas fa-external-link-alt"></i>
+            </div>
+            
+            <h2 style="color: var(--dark); margin-bottom: 15px;">سيتم فتح الإعلان في نافذة جديدة</h2>
+            <p style="color: var(--gray); margin-bottom: 25px;">يرجى التأكد من السماح بالنوافذ المنبثقة لهذا الموقع</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 25px;">
+                <p style="color: var(--dark); margin-bottom: 10px;"><strong>تعليمات:</strong></p>
+                <p style="color: var(--gray); font-size: 0.9rem;">
+                    1. انقر على "فتح الإعلان"<br>
+                    2. شاهد الإعلان في النافذة الجديدة لمدة <strong>7 ثوانٍ على الأقل</strong><br>
+                    3. عد إلى هذه الصفحة وانقر على "تمت المشاهدة"
+                </p>
+            </div>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="cancelAd" style="background: var(--light-gray); color: var(--dark); border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-family: inherit;">
+                    إلغاء
+                </button>
+                <button id="openAd" style="background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-family: inherit;">
+                    <i class="fas fa-external-link-alt"></i> فتح الإعلان
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد المشاهدة -->
+    <div id="adWatchedModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="background: white; border-radius: 15px; padding: 30px; max-width: 500px; width: 90%; text-align: center; position: relative;">
+            <div style="width: 80px; height: 80px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: white; font-size: 2rem;">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h2 style="color: var(--dark); margin-bottom: 15px;">تأكيد مشاهدة الإعلان</h2>
+            <p style="color: var(--gray); margin-bottom: 25px;">للتأكد من أنك شاهدت الإعلان، يرجى الإجابة على السؤال التالي:</p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 25px; text-align: right;">
+                <p style="color: var(--dark); margin-bottom: 15px; font-weight: bold;" id="verificationQuestion"></p>
+                <input type="text" id="verificationAnswer" style="width: 100%; padding: 12px; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem; margin-bottom: 15px;" placeholder="أدخل إجابتك هنا...">
+                <p style="color: var(--gray); font-size: 0.9rem;" id="verificationHint"></p>
+            </div>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button id="notWatched" style="background: var(--light-gray); color: var(--dark); border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-family: inherit;">
+                    لم أشاهده بعد
+                </button>
+                <button id="confirmWatched" style="background: var(--success); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-family: inherit;" disabled>
+                    <i class="fas fa-check"></i> تأكيد المشاهدة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // حالة التطبيق
+        const appState = {
+            adsWatched: 0,
+            totalAds: 3,
+            currentAd: null,
+            adWindow: null,
+            adCheckInterval: null,
+            adStartTime: null,
+            verificationQuestions: [
+                {
+                    question: "ما هو لون الخلفية في الإعلان؟",
+                    answer: "أزرق",
+                    hint: "لون البحر والسماء"
+                },
+                {
+                    question: "ما هو الشعار الموجود في الإعلان؟",
+                    answer: "تاج",
+                    hint: "رمز الملوك"
+                },
+                {
+                    question: "ما هو النص الرئيسي في الإعلان؟",
+                    answer: "ترقية",
+                    hint: "كلمة تبدأ بحرف التاء"
+                },
+                {
+                    question: "ما هو الشكل الهندسي الظاهر؟",
+                    answer: "مستطيل",
+                    hint: "له أربعة أضلاع"
+                },
+                {
+                    question: "ما هو الرمز بجانب العنوان؟",
+                    answer: "صاروخ",
+                    hint: "يطلق إلى الفضاء"
+                }
+            ],
+            currentQuestion: null
+        };
+
+        // رابط الإعلان الحقيقي من أدستررا
+        const AD_LINK = 'https://www.revenuecpmgate.com/vv981umys?key=358dc99f33bd766b6ce1e963bb6aedda';
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            loadProgress();
+        });
+
+        function initializeApp() {
+            setupAdButtons();
+            setupAdModals();
+            updateProgress();
+        }
+
+        function setupAdButtons() {
+            // إعداد أزرار مشاهدة الإعلانات
+            document.querySelectorAll('.watch-ad-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const adId = this.getAttribute('data-ad');
+                    showAdConfirmModal(adId);
+                });
+            });
+        }
+
+        function setupAdModals() {
+            // إعداد نوافذ التأكيد
+            document.getElementById('closeAdConfirm').addEventListener('click', closeAdConfirmModal);
+            document.getElementById('cancelAd').addEventListener('click', closeAdConfirmModal);
+            document.getElementById('openAd').addEventListener('click', openAdWindow);
+            
+            document.getElementById('notWatched').addEventListener('click', closeAdWatchedModal);
+            document.getElementById('confirmWatched').addEventListener('click', confirmAdWatched);
+            
+            // التحقق من الإجابة
+            document.getElementById('verificationAnswer').addEventListener('input', checkVerificationAnswer);
+            
+            // إغلاق النوافذ عند النقر خارجها
+            document.getElementById('adConfirmModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdConfirmModal();
+                }
+            });
+            
+            document.getElementById('adWatchedModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeAdWatchedModal();
+                }
+            });
+        }
+
+        function showAdConfirmModal(adId) {
+            appState.currentAd = adId;
+            document.getElementById('adConfirmModal').style.display = 'flex';
+        }
+
+        function closeAdConfirmModal() {
+            document.getElementById('adConfirmModal').style.display = 'none';
+            appState.currentAd = null;
+        }
+
+        function openAdWindow() {
+            // فتح الإعلان الحقيقي في نافذة جديدة
+            appState.adWindow = window.open(AD_LINK, '_blank', 'width=800,height=600,scrollbars=yes');
+            
+            // تسجيل وقت بدء الإعلان
+            appState.adStartTime = new Date();
+            
+            // إغلاق نافذة التأكيد
+            closeAdConfirmModal();
+            
+            // بدء التحقق من وقت المشاهدة
+            startAdTimeCheck();
+        }
+
+        function startAdTimeCheck() {
+            // التحقق كل ثانية من وقت المشاهدة
+            appState.adCheckInterval = setInterval(function() {
+                const currentTime = new Date();
+                const timeDiff = (currentTime - appState.adStartTime) / 1000; // الفرق بالثواني
+                
+                // إذا مر 7 ثوانٍ على الأقل، نعرض نافذة التأكيد
+                if (timeDiff >= 7) {
+                    clearInterval(appState.adCheckInterval);
+                    showAdWatchedModal();
+                }
+            }, 1000);
+        }
+
+        function showAdWatchedModal() {
+            // اختيار سؤال عشوائي للتحقق
+            const randomIndex = Math.floor(Math.random() * appState.verificationQuestions.length);
+            appState.currentQuestion = appState.verificationQuestions[randomIndex];
+            
+            // تعيين السؤال والإرشاد
+            document.getElementById('verificationQuestion').textContent = appState.currentQuestion.question;
+            document.getElementById('verificationHint').textContent = `تلميح: ${appState.currentQuestion.hint}`;
+            
+            // إعادة تعيين حقل الإجابة
+            document.getElementById('verificationAnswer').value = '';
+            document.getElementById('confirmWatched').disabled = true;
+            
+            // إغلاق نافذة الإعلان إذا كانت مفتوحة
+            if (appState.adWindow && !appState.adWindow.closed) {
+                appState.adWindow.close();
+            }
+            
+            // إيقاف التحقق من الوقت
+            clearInterval(appState.adCheckInterval);
+            
+            // عرض نافذة التأكيد
+            document.getElementById('adWatchedModal').style.display = 'flex';
+        }
+
+        function checkVerificationAnswer() {
+            const userAnswer = document.getElementById('verificationAnswer').value.trim().toLowerCase();
+            const correctAnswer = appState.currentQuestion.answer.toLowerCase();
+            const confirmButton = document.getElementById('confirmWatched');
+            
+            // التحقق من صحة الإجابة
+            if (userAnswer === correctAnswer) {
+                confirmButton.disabled = false;
+                confirmButton.style.background = 'var(--success)';
+            } else {
+                confirmButton.disabled = true;
+                confirmButton.style.background = 'var(--light-gray)';
+            }
+        }
+
+        function closeAdWatchedModal() {
+            document.getElementById('adWatchedModal').style.display = 'none';
+            
+            // إذا قال المستخدم أنه لم يشاهد الإعلان، نعرض نافذة التأكيد مرة أخرى
+            if (appState.currentAd) {
+                setTimeout(function() {
+                    showAdConfirmModal(appState.currentAd);
+                }, 500);
+            }
+        }
+
+        function confirmAdWatched() {
+            // زيادة عدد الإعلانات المشاهدة
+            appState.adsWatched++;
+            
+            // تحديث واجهة الإعلان
+            document.getElementById(`ad${appState.currentAd}`).classList.add('watched');
+            const button = document.querySelector(`[data-ad="${appState.currentAd}"]`);
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-check"></i> تمت المشاهدة';
+            
+            // إغلاق نافذة التأكيد
+            document.getElementById('adWatchedModal').style.display = 'none';
+            
+            // تحديث التقدم
+            updateProgress();
+            
+            // عرض إشعار
+            showNotification(`شكراً لدعمك! تمت مشاهدة الإعلان ${appState.adsWatched}/${appState.totalAds}`);
+            
+            // إعادة تعيين الإعلان الحالي
+            appState.currentAd = null;
+            appState.currentQuestion = null;
+            
+            // التحقق من اكتمال جميع الإعلانات
+            if (appState.adsWatched >= appState.totalAds) {
+                enableUpgrade();
+            }
+        }
+
+        function updateProgress() {
+            // تحديث شريط التقدم
+            const progress = (appState.adsWatched / appState.totalAds) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${appState.adsWatched}/${appState.totalAds} إعلانات`;
+            document.getElementById('adsCounter').textContent = `${appState.adsWatched}/${appState.totalAds}`;
+            
+            // حفظ التقدم
+            saveProgress();
+        }
+
+        function enableUpgrade() {
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            upgradeBtn.disabled = false;
+            upgradeBtn.innerHTML = '<i class="fas fa-crown"></i> الترقية الآن إلى النسخة المدفوعة';
+            upgradeBtn.onclick = completeUpgrade;
+            
+            showNotification('🎉 مبروك! يمكنك الآن الترقية إلى النسخة المدفوعة', 'success');
+        }
+
+        function completeUpgrade() {
+            // عرض رسالة تأكيد
+            showNotification('جاري تفعيل النسخة المدفوعة...', 'info');
+            
+            // إضافة تأثير التحميل
+            document.body.classList.add('loading');
+            
+            // حفظ حالة الترقية
+            localStorage.setItem('userUpgraded', 'true');
+            localStorage.setItem('upgradeDate', new Date().toISOString());
+            localStorage.setItem('adsWatched', appState.adsWatched);
+            
+            // التوجيه إلى الصفحة الرئيسية بعد تأخير بسيط
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function saveProgress() {
+            const progress = {
+                adsWatched: appState.adsWatched,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('upgradeProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('upgradeProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                appState.adsWatched = progress.adsWatched || 0;
+                
+                // تحديث واجهة المستخدم بناءً على التقدم المحفوظ
+                for (let i = 1; i <= appState.adsWatched; i++) {
+                    document.getElementById(`ad${i}`).classList.add('watched');
+                    const button = document.querySelector(`[data-ad="${i}"]`);
+                    button.disabled = true;
+                    button.innerHTML = '<i class="fas fa-check"></i> تمت المشاهدة';
+                }
+                
+                // التحقق إذا كان يمكن تفعيل الترقية
+                if (appState.adsWatched >= appState.totalAds) {
+                    enableUpgrade();
+                }
+                
+                updateProgress();
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // إزالة الإشعارات السابقة
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+            
+            const colors = {
+                success: '#4CAF50',
+                error: '#ef476f',
+                warning: '#ff9e00',
+                info: '#4361ee'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icons[type] || 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
